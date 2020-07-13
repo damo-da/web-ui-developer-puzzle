@@ -37,6 +37,7 @@ export class BookSearchComponent implements OnInit {
       this.books = books;
     });
 
+    // https://angular.io/guide/http#optimizing-server-interaction-with-debouncing
     this.searchForm.controls.term.valueChanges
     .pipe(
       debounceTime(500),
