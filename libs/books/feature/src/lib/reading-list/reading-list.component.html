@@ -23,6 +23,8 @@
           [attr.aria-label]="'Mark ' + b.title + ' as finished'"
           (click)="markAsFinished(b)"
           [disabled]="b.finished"
+          [attr.data-finished]="b.finished ? 'finished' : 'unfinished'"
+          data-role="mark_finish"
         >
           <mat-icon>done</mat-icon>
         </button>
@@ -34,6 +36,8 @@
         color="warn"
         [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
         (click)="removeFromReadingList(b)"
+        [attr.data-finished]="b.finished ? 'finished' : 'unfinished'"
+        data-role="delete"
       >
         <mat-icon>remove_circle</mat-icon>
       </button>
