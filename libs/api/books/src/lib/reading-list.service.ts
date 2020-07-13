@@ -28,4 +28,21 @@ export class ReadingListService {
       return list.filter(x => x.bookId !== id);
     });
   }
+
+  async markAsFinished(id: string): Promise<void> {
+    this.storage.update(list => {
+      return list.map((el: ReadingListItem) => {
+        if (el.bookId !== id) {
+          return el;
+        }
+
+        // deep copy and mark as finished.
+        el = JSON.parse(JSON.stringify(el)) as ReadingListItem;
+        el.finishedDate = new Date().toISOString();
+        el.finished = true;
+
+        return el;
+      });
+    });
+  }
 }
