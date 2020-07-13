@@ -15,16 +15,18 @@
       </div>
     </div>
     <div>
-      <button
-        mat-icon-button
-        color="primary"
-        [matTooltip]="'Mark as finished'"
-        [attr.aria-label]="'Mark ' + b.title + ' as finished'"
-        (click)="markAsFinished(b)"
-        [disabled]="b.finished"
-      >
-        <mat-icon>done</mat-icon>
-      </button>
+      <div
+        [matTooltip]="b.finished ? 'Finished reading at ' + ( b.finishedDate | date: 'medium' ) : 'Mark book as read'">
+        <button
+          mat-icon-button
+          color="primary"
+          [attr.aria-label]="'Mark ' + b.title + ' as finished'"
+          (click)="markAsFinished(b)"
+          [disabled]="b.finished"
+        >
+          <mat-icon>done</mat-icon>
+        </button>
+      </div>
     </div>
     <div>
       <button
