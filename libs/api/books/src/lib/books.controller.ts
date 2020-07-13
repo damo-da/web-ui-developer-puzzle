@@ -5,16 +5,16 @@ import {
   HttpStatus,
   Query
 } from '@nestjs/common';
-import { BooksService } from './books.service';
+import { BooksService } from '@tmo/api/books';
 
 @Controller()
 export class BooksController {
   constructor(private readonly books: BooksService) {}
 
   @Get('/books/search')
-  async searchBooks(@Query('q') term) {
+  searchBooks(@Query('q') term) {
     try {
-      return await this.books.search(term);
+      return this.books.search(term);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.UNPROCESSABLE_ENTITY);
     }
