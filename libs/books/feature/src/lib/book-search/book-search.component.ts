@@ -49,7 +49,7 @@ export class BookSearchComponent implements OnInit {
     this.store.dispatch(addToReadingList({ book }));
 
     this.snackBar.open(`Adding ${book.title} to reading list.`, 'Undo', {
-      duration: 3000,
+      duration: 5000,
     })
       .onAction()
       .subscribe(() => {
