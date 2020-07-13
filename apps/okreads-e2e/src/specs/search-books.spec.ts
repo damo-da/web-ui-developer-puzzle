@@ -2,7 +2,7 @@ import { $, $$, browser, ExpectedConditions } from 'protractor';
 import { expect } from 'chai';
 
 describe('When: Use the search feature', () => {
-  xit('Then: I should be able to search books by title', async () => {
+  it('Then: I should be able to search books by title', async () => {
     await browser.get('/');
     await browser.wait(
       ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
@@ -17,7 +17,7 @@ describe('When: Use the search feature', () => {
     expect(items.length).to.be.greaterThan(1, 'At least one book');
   });
 
-  xit('Then: I should see search results as I am typing', async () => {
+  it('Then: I should see search results as I am typing', async () => {
     await browser.get('/');
     await browser.wait(
       ExpectedConditions.textToBePresentInElement($('tmo-root'), 'okreads')
@@ -26,7 +26,7 @@ describe('When: Use the search feature', () => {
     // TODO: Implement this test!
   });
 
-  it('Then: I should be able to add book to reading list', async () => {
+  it('Then: I should be able to add see book after adding on my reading list', async () => {
     const getReadingListCount = async () => {
       const countHolders = await $$('tmo-total-count [data-count]');
       if (!countHolders.length) return 0;
@@ -48,18 +48,25 @@ describe('When: Use the search feature', () => {
       ExpectedConditions.presenceOf($('.book-grid'))
     );
 
-
     const prevCount = await getReadingListCount()
 
     const availableBooks = await $$('button[data-testing="add-to-reading-list"]:not([disabled])');
     await availableBooks[0].click();
 
-    await browser.sleep(500);
+    const readingListToggle = await $('[data-testing="toggle-reading-list"]');
+    await readingListToggle.click();
+
+    await browser.wait(
+      ExpectedConditions.textToBePresentInElement(
+        $('[data-testing="reading-list-container"]'),
+        'My Reading List'
+      )
+    );
 
     const newCount = await getReadingListCount()
     expect(newCount).to.equal(prevCount + 1, 'book count must increase by 1')
 
-    // undo addition for cleanup
+    // undo for cleanup
     await $('simple-snack-bar button').click()
 
     const newerCount = await getReadingListCount()
